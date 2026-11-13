@@ -20,6 +20,10 @@ def handle_client(client):
         client_usernames[client] = username
         broadcast(f"{username} connected")
         logging.info(f"{username} connected")
+        client.send("Вы подключены к чату! Добро пожаловать!".encode("utf-8"))
+        while True:
+            message = client.recv(1024).decode("utf-8")
+            broadcast(message=message)
     except:
         remove(client)
 
