@@ -2,6 +2,8 @@ import logging
 import socket
 import threading
 
+prefix = "/"
+commands_list = {"help"}
 logging.basicConfig(filename="server.log",level=logging.INFO,format="%(asctime)s [%(levelname)s]: %(message)s")
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = "192.168.31.122"
@@ -20,7 +22,7 @@ def handle_client(client):
         client_usernames[client] = username
         broadcast(f"{username} connected")
         logging.info(f"{username} connected")
-        client.send("Вы подключены к чату! Добро пожаловать!".encode("utf-8"))
+        client.send("Welcome!".encode("utf-8"))
         while True:
             message = client.recv(1024).decode("utf-8")
             broadcast(message=message)
@@ -42,3 +44,5 @@ def broadcast(message):
             client.send(message.encode("UTF-8"))
         except:
             remove(client)
+
+
